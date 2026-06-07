@@ -1,5 +1,6 @@
 import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
+import { gettext } from "./i18n";
 import { getPageProps } from "./utils";
 import { OAuthScopeDesc } from "./forms/utils";
 
@@ -26,32 +27,32 @@ function Applications({
 }: ApplicationProps): JSX.Element {
   return (
     <>
-      <h2>Applications</h2>
+      <h2>{gettext("Applications")}</h2>
 
       <div className="clearfix">
-        <h3 className="pull-left">Your applications</h3>
+        <h3 className="pull-left">{gettext("Your applications")}</h3>
         <a
           href={`${urlPrefix}/client/create`}
           className="btn btn-success pull-right"
           style={{ marginTop: "12px" }}
         >
           <span className="glyphicon glyphicon-plus-sign" />
-          Create new application
+          {gettext("Create new application")}
         </a>
       </div>
       {applications.length === 0 ? (
         <p className="lead" style={{ textAlign: "center" }}>
-          No applications found
+          {gettext("No applications found")}
         </p>
       ) : (
         <table className="oauth-applications-table table table-hover">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Website</th>
-              <th>Client ID</th>
-              <th>Client secret</th>
-              <th>Actions</th>
+              <th>{gettext("Name")}</th>
+              <th>{gettext("Website")}</th>
+              <th>{gettext("Client ID")}</th>
+              <th>{gettext("Client secret")}</th>
+              <th>{gettext("Actions")}</th>
             </tr>
           </thead>
           <tbody>
@@ -66,13 +67,13 @@ function Applications({
                     className="btn btn-block btn-primary btn-xs"
                     href={`${urlPrefix}/client/edit/${application.client_id}`}
                   >
-                    Modify
+                    {gettext("Modify")}
                   </a>
                   <a
                     className="btn btn-block btn-danger btn-xs"
                     href={`${urlPrefix}/client/delete/${application.client_id}`}
                   >
-                    Delete
+                    {gettext("Delete")}
                   </a>
                 </td>
               </tr>
@@ -82,19 +83,19 @@ function Applications({
       )}
       <hr />
 
-      <h3>Authorized applications</h3>
+      <h3>{gettext("Authorized applications")}</h3>
       {tokens.length === 0 ? (
         <p className="lead" style={{ textAlign: "center" }}>
-          No tokens found
+          {gettext("No tokens found")}
         </p>
       ) : (
         <table className="oauth-applications-table table table-hover">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Website</th>
-              <th>Access</th>
-              <th>Actions</th>
+              <th>{gettext("Name")}</th>
+              <th>{gettext("Website")}</th>
+              <th>{gettext("Access")}</th>
+              <th>{gettext("Actions")}</th>
             </tr>
           </thead>
           <tbody>
@@ -116,7 +117,7 @@ function Applications({
                       className="btn btn-danger"
                       style={{ color: "white" }}
                     >
-                      Revoke access
+                      {gettext("Revoke access")}
                     </button>
                   </form>
                 </td>

@@ -1,4 +1,4 @@
-﻿from werkzeug.serving import run_simple
+from werkzeug.serving import run_simple
 from metabrainz import db
 from metabrainz import create_app
 from metabrainz.model.access_log import AccessLog
@@ -15,6 +15,7 @@ from metabrainz.supporter.copy_mb_row_ids import copy_row_ids
 ADMIN_SQL_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'admin', 'sql')
 
 cli = click.Group()
+
 application = create_app()
 
 
@@ -25,6 +26,7 @@ application = create_app()
               help="Turns debugging mode on or off. If specified, overrides "
                    "'DEBUG' value in the config file.")
 def runserver(host, port, debug=False):
+    """Run the development server without going through Docker Compose."""
     run_simple(
         hostname=host,
         port=port,
@@ -38,6 +40,7 @@ def runserver(host, port, debug=False):
 @click.option("--force", "-f", is_flag=True, help="Drop existing database and user.")
 @click.option("--create-db", "-c", is_flag=True, help="Create database and extensions.")
 def init_db(force=False, create_db=False):
+    """Initialize the local database schema from the SQL files in admin/sql."""
     db.init_db_engine(application.config["POSTGRES_ADMIN_URI"])
 
     if force:
@@ -81,10 +84,11 @@ def init_db(force=False, create_db=False):
 def extract_strings():
     """Extract all strings into messages.pot.
     This command should be run after any translatable strings are updated.
-    Otherwise updates are not going to be available on Transifex.
+    Otherwise updates are not going to be available on Weblate.
     """
     _run_command("pybabel extract -F metabrainz/babel.cfg "
-                 "-o metabrainz/messages.pot metabrainz/")
+                 "-o metabrainz/messages.pot "
+                 "metabrainz/ oauth/ frontend/js/src/")
     click.echo("Strings have been successfully extracted into messages.pot file.")
 
 
@@ -97,6 +101,7 @@ def compile_translations():
 
 @cli.command()
 def cleanup_logs():
+    """Remove stale access-log IP address records."""
     with create_app().app_context():
         AccessLog.remove_old_ip_addr_records()
 
@@ -128,6 +133,7 @@ def import_musicbrainz_row_ids():
 
 
 def _run_psql(script, uri, database=None):
+    """Run one raw SQL file through the psql command-line client."""
     hostname, port, db_name, username, password = _explode_db_uri(uri)
     script = os.path.join(ADMIN_SQL_DIR, script)
     command = [
@@ -143,6 +149,7 @@ def _run_psql(script, uri, database=None):
 
 
 def _run_command(command):
+    """Run a shell command and fail the invoking CLI command if it fails."""
     return subprocess.check_call(command, shell=True)
 
 
@@ -158,5 +165,6 @@ if __name__ == '__main__':
     cli()
 
 """
+Example SQL kept here for manual local tier setup/debugging.
 insert into tier (name, short_desc, long_desc, price, available, "primary") values ('We will contribute, we promise!', 'For lame user lying about supporting us.', 'Whatevs, you dont care anyway.', 0.0, 't', 't');
 """

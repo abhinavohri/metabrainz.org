@@ -55,6 +55,21 @@
       {# Not showing supporter stuff on error pages. If attempt to load supporter info fails there, page will not render. #}
       {% if not error %}
         <ul class="nav navbar-nav navbar-right">
+          {# Language changes are handled by the shared before_request hook. #}
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+              <span class="sr-only">{{ _('Language') }}</span>
+              {{ current_locale|upper }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              {% for language in supported_languages %}
+                <li{% if language.code == current_locale %} class="active"{% endif %}>
+                  <a href="{{ get_language_url(language.code) }}">{{ language.name }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </li>
           {% if not current_user or current_user.is_anonymous %}
             <li class="support-link"><a href="{{ url_for('supporters.account_type') }}">{{ _('Register') }}</a></li>
             <li><a href="{{ url_for('supporters.login') }}">{{ _('Sign in') }}</a></li>

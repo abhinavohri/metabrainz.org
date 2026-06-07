@@ -50,5 +50,16 @@ def get_int_query_param(key: str, default: int):
         return default
 
 
-def get_global_props():
-    return json.dumps({})
+def get_global_props(extra_props=None):
+    from metabrainz.i18n import get_frontend_translations, get_locale
+
+    # React islands read this JSON from the page and use the same gettext
+    # catalog as the Flask-rendered templates.
+    locale = get_locale()
+    props = {
+        "locale": locale,
+        "translations": get_frontend_translations(locale),
+    }
+    if extra_props:
+        props.update(extra_props)
+    return json.dumps(props)

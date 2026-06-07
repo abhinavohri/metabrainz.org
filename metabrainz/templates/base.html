@@ -1,7 +1,8 @@
 {% from 'macros.html' import print_message, display_form_errors %}
 
 <!DOCTYPE html>
-<html lang="en">
+{# Keep the document language aligned with Flask-Babel's selected locale. #}
+<html lang="{{ current_locale }}">
 
   <head>
     {% block head %}
