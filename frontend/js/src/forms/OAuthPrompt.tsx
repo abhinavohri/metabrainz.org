@@ -1,6 +1,5 @@
 import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
-import { gettext } from "../i18n";
 import { getPageProps } from "../utils";
 import { OAuthScopeDesc } from "./utils";
 
@@ -25,19 +24,17 @@ function OAuthPrompt({
     <div id="oauth-prompt">
       <h1 className="page-title">{client_name}</h1>
       <p style={{ fontSize: "1.1em" }}>
-        {gettext("This app requested permission to access:")}
+        This app requested permission to access:
       </p>
       <div className="permissions">
         <div className="permission">
           <div className="icon">
             <img
               src={`${urlPrefix}/static/img/oauth/identity.svg`}
-              alt={gettext("Identity")}
+              alt="Identity"
             />
           </div>
-          <div className="description">
-            {gettext("Your identity on MetaBrainz")}
-          </div>
+          <div className="description">Your identity on MetaBrainz</div>
         </div>
 
         <div className="permission">{OAuthScopeDesc(scopes)}</div>
@@ -57,12 +54,12 @@ function OAuthPrompt({
         <div className="form-group">
           <div className="col-md-offset-3 col-md-1">
             <a href={cancel_url} className="btn btn-default">
-              {gettext("Cancel")}
+              Cancel
             </a>
           </div>
           <div className="col-md-1" style={{ marginLeft: "8px" }}>
             <button type="submit" className="btn btn-primary">
-              {gettext("Allow access")}
+              Allow access
             </button>
           </div>
         </div>

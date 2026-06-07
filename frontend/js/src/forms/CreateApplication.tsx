@@ -2,7 +2,6 @@ import { Field, getIn, FieldArray, Formik } from "formik";
 import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
 import * as Yup from "yup";
-import { gettext } from "../i18n";
 import { getPageProps } from "../utils";
 import { OAuthTextInput } from "./utils";
 
@@ -38,10 +37,8 @@ function CreateApplication({
     <>
       <h2>
         {is_edit_mode
-          ? gettext("Edit application %(name)s", {
-              name: initial_form_data.client_name,
-            })
-          : gettext("Create new application")}
+          ? `Edit application ${initial_form_data.client_name}`
+          : "Create new application"}
       </h2>
       <hr />
       <Formik
@@ -56,41 +53,30 @@ function CreateApplication({
         initialTouched={initial_errors}
         validationSchema={Yup.object({
           client_name: Yup.string()
-            .required(gettext("Application name is required."))
-            .min(
-              3,
-              gettext(
-                "Application name needs to be at least 3 characters long."
-              )
-            )
+            .required("Application name is required.")
+            .min(3, "Application name needs to be at least 3 characters long.")
             .max(
               64,
-              gettext(
-                "Application name needs to be at most 64 characters long."
-              )
+              "Application name needs to be at most 64 characters long."
             ),
           description: Yup.string()
-            .required(gettext("Application description is required."))
+            .required("Application description is required.")
             .min(
               3,
-              gettext(
-                "Application description needs to be at least 3 characters long."
-              )
+              "Application description needs to be at least 3 characters long."
             )
             .max(
               512,
-              gettext(
-                "Application description needs to be at most 64 characters long."
-              )
+              "Application description needs to be at most 64 characters long."
             ),
-          website: Yup.string().required(gettext("Homepage is required.")),
+          website: Yup.string().required("Homepage is required."),
           redirect_uris: Yup.array()
             .of(
               Yup.string().required(
-                gettext("Authorization callback URL cannot be empty.")
+                "Authorization callback URL cannot be empty."
               )
             )
-            .min(1, gettext("Authorization callback URL is required.")),
+            .min(1, "Authorization callback URL is required."),
         })}
         onSubmit={() => {}}
       >
@@ -111,7 +97,7 @@ function CreateApplication({
             </div>
 
             <OAuthTextInput
-              label={gettext("Application Name")}
+              label="Application Name"
               id="client_name"
               name="client_name"
               type="text"
@@ -119,7 +105,7 @@ function CreateApplication({
             />
 
             <OAuthTextInput
-              label={gettext("Description")}
+              label="Description"
               id="description"
               name="description"
               type="text"
@@ -127,7 +113,7 @@ function CreateApplication({
             />
 
             <OAuthTextInput
-              label={gettext("Homepage")}
+              label="Homepage"
               id="website"
               name="website"
               type="text"
@@ -136,8 +122,7 @@ function CreateApplication({
 
             <div className="form-group">
               <label className="col-sm-3 control-label" htmlFor="redirect_uris">
-                {gettext("Redirect URIs")}{" "}
-                <span style={{ color: "red" }}>*</span>
+                Redirect URIs <span style={{ color: "red" }}>*</span>
               </label>
               <div className="col-sm-5">
                 <FieldArray name="redirect_uris">
@@ -183,7 +168,7 @@ function CreateApplication({
                         className="btn btn-default"
                         onClick={() => push("")}
                       >
-                        {gettext("Add a redirect URI")}
+                        Add a redirect uri
                       </button>
                     );
                   }}
@@ -197,9 +182,7 @@ function CreateApplication({
             <div className="form-group">
               <div className="col-sm-offset-3 col-sm-10">
                 <button type="submit" className="btn btn-primary">
-                  {is_edit_mode
-                    ? gettext("Save changes")
-                    : gettext("Create application")}
+                  {is_edit_mode ? "Save changes" : "Create application"}
                 </button>
               </div>
             </div>

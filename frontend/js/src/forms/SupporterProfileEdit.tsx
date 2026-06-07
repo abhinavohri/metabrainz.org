@@ -2,7 +2,6 @@ import { Formik } from "formik";
 import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
 import * as Yup from "yup";
-import { gettext } from "../i18n";
 import { getPageProps } from "../utils";
 import { Dataset, DatasetsInput, TextInput } from "./utils";
 
@@ -23,8 +22,8 @@ function SupporterProfileEdit({
 }: SupporterProfileEditProps): JSX.Element {
   return (
     <>
-      <h1 className="page-title">{gettext("Your Profile")}</h1>
-      <h2>{gettext("Edit contact information")}</h2>
+      <h1 className="page-title">Your Profile</h1>
+      <h2>Edit contact information</h2>
 
       <Formik
         initialValues={{
@@ -37,12 +36,10 @@ function SupporterProfileEdit({
         initialErrors={initial_errors}
         initialTouched={initial_errors}
         validationSchema={Yup.object({
-          contact_name: Yup.string().required(
-            gettext("Contact name is required!")
-          ),
+          contact_name: Yup.string().required("Contact name is required!"),
           contact_email: Yup.string()
             .email()
-            .required(gettext("Email address is required!")),
+            .required("Email address is required!"),
         })}
         onSubmit={() => {}}
       >
@@ -66,7 +63,7 @@ function SupporterProfileEdit({
               type="text"
               id="contact_name"
               name="contact_name"
-              label={gettext("Name")}
+              label="Name"
               required
             />
 
@@ -74,7 +71,7 @@ function SupporterProfileEdit({
               type="email"
               id="contact_email"
               name="contact_email"
-              label={gettext("Email")}
+              label="Email"
               required
             />
             <br />
@@ -84,7 +81,7 @@ function SupporterProfileEdit({
             <div className="form-group">
               <div className="col-sm-offset-4 col-sm-10">
                 <button type="submit" className="btn btn-primary">
-                  {gettext("Update")}
+                  Update
                 </button>
               </div>
             </div>

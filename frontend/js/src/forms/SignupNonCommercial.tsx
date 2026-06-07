@@ -3,7 +3,6 @@ import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
 import ReCAPTCHA from "react-google-recaptcha";
 import * as Yup from "yup";
-import { gettext } from "../i18n";
 import { getPageProps } from "../utils";
 import {
   CheckboxInput,
@@ -33,12 +32,12 @@ function SignupNonCommercial({
   return (
     <>
       <h1 className="page-title">
-        {gettext("Sign up")} <small>{gettext("non-commercial")}</small>
+        Sign up <small>non-commercial</small>
       </h1>
       <p>
-        {gettext(
-          "Please be aware that misuse of the non-commercial service for commercial purposes will result in us revoking your access token and then billing you for your commercial use of our datasets or the Live Data Feed."
-        )}
+        Please be aware that misuse of the non-commercial service for commercial
+        purposes will result in us revoking your access token and then billing
+        you for your commercial use of our datasets or the Live Data Feed.
       </p>
 
       <Formik
@@ -55,20 +54,15 @@ function SignupNonCommercial({
         initialTouched={initial_errors}
         validationSchema={Yup.object({
           usage_desc: Yup.string()
-            .required(gettext("Please, tell us how you (will) use our data."))
-            .max(
-              500,
-              gettext("Please, limit usage description to 500 characters.")
-            ),
-          contact_name: Yup.string().required(
-            gettext("Contact name is required!")
-          ),
+            .required("Please, tell us how you (will) use our data.")
+            .max(500, "Please, limit usage description to 500 characters."),
+          contact_name: Yup.string().required("Contact name is required!"),
           contact_email: Yup.string()
             .email()
-            .required(gettext("Email address is required!")),
+            .required("Email address is required!"),
           agreement: Yup.boolean()
-            .required(gettext("You need to accept the agreement!"))
-            .oneOf([true], gettext("You need to accept the agreement!")),
+            .required("You need to accept the agreement!")
+            .oneOf([true], "You need to accept the agreement!"),
           recaptcha: Yup.string().required(),
         })}
         onSubmit={() => {}}
@@ -91,24 +85,22 @@ function SignupNonCommercial({
 
             <div className="form-group">
               <div className="col-sm-4 control-label">
-                <strong>{gettext("Account type")}</strong>
+                <strong>Account type</strong>
               </div>
               <div className="col-sm-5" style={{ paddingTop: "7px" }}>
-                {gettext("Non-commercial")}
+                Non-commercial
               </div>
               <div
                 className="col-sm-6 col-sm-offset-4"
                 style={{ paddingTop: "7px" }}
               >
-                <a href="/supporters/account-type">
-                  {gettext("Change account type")}
-                </a>
+                <a href="/supporters/account-type">Change account type</a>
               </div>
             </div>
 
             <div className="form-group">
               <div className="col-sm-4 control-label">
-                <strong>{gettext("MusicBrainz Account")}</strong>
+                <strong>MusicBrainz Account</strong>
               </div>
               <div className="col-sm-5" style={{ paddingTop: "7px" }}>
                 {mb_username}
@@ -120,7 +112,7 @@ function SignupNonCommercial({
               type="text"
               id="contact_name"
               name="contact_name"
-              label={gettext("Name")}
+              label="Name"
               required
             />
 
@@ -128,7 +120,7 @@ function SignupNonCommercial({
               type="email"
               id="contact_email"
               name="contact_email"
-              label={gettext("Email")}
+              label="Email"
               required
             />
             <br />
@@ -138,12 +130,10 @@ function SignupNonCommercial({
             <TextAreaInput
               id="usage_desc"
               name="usage_desc"
-              label={gettext(
-                "Can you please tell us more about the project in which you'd like to use our data? Do you plan to self host the data or use our APIs?"
-              )}
+              label="Can you please tell us more about the project in which you'd like to use our data? Do you plan to self host the data or use our APIs?"
               maxLength={150}
               required
-              placeholder={gettext("(max 150 characters)")}
+              placeholder="(max 150 characters)"
             />
             <hr />
 
@@ -155,14 +145,13 @@ function SignupNonCommercial({
               required
             >
               <p>
-                {gettext(
-                  "I agree to use the MetaBrainz data for non-commercial (less than $500 income per year) or personal uses only."
-                )}
+                I agree to use the MetaBrainz data for non-commercial (less than
+                $500 income per year) or personal uses only.
               </p>
               <p>
-                {gettext(
-                  "I also agree that if I generate a Live Data Feed access token, then I will treat my access token as a secret and will not share this token publicly or commit it to a source code repository."
-                )}
+                I also agree that if I generate a Live Data Feed access token,
+                then I will treat my access token as a secret and will not share
+                this token publicly or commit it to a source code repository.
               </p>
             </CheckboxInput>
 
@@ -178,7 +167,7 @@ function SignupNonCommercial({
             <div className="form-group">
               <div className="col-sm-offset-4 col-sm-8">
                 <button type="submit" className="btn btn-primary">
-                  {gettext("Sign up")}
+                  Sign up
                 </button>
               </div>
             </div>
