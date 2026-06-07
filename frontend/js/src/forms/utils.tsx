@@ -1,5 +1,6 @@
 import React, { JSX } from "react";
 import { Field, FieldConfig, useField } from "formik";
+import { gettext } from "../i18n";
 
 export type TextInputProps = JSX.IntrinsicElements["input"] &
   FieldConfig & {
@@ -103,7 +104,7 @@ export function DatasetsInput({ datasets }: DatasetsProps) {
   return (
     <div className="form-group">
       <div className="col-sm-4 control-label">
-        <strong>Datasets</strong>
+        <strong>{gettext("Datasets")}</strong>
       </div>
       <div className="col-sm-5">
         <div className="list-group">
@@ -169,7 +170,7 @@ export function OAuthScopeDesc(scopes: Array<Scope>) {
       {/* eslint-disable-next-line react/destructuring-assignment */}
       {scopes.map((scope) => (
         <li>
-          {scope.name}: {scope.description}
+          {scope.name}: {gettext(scope.description)}
         </li>
       ))}
     </ul>

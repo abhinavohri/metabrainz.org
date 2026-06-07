@@ -1,3 +1,5 @@
+import { initI18n } from "./i18n";
+
 const getPageProps = (): {
   domContainer: HTMLElement;
   reactProps: Record<string, any>;
@@ -19,6 +21,7 @@ const getPageProps = (): {
   // Global props *cannot* be empty
   if (globalPropsElement?.innerHTML) {
     globalProps = JSON.parse(globalPropsElement.innerHTML);
+    initI18n(globalProps);
   } else {
     throw new Error("No global props element found on the page");
   }

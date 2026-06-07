@@ -3,6 +3,7 @@ import React, { JSX } from "react";
 import { createRoot } from "react-dom/client";
 import ReCAPTCHA from "react-google-recaptcha";
 import * as Yup from "yup";
+import { gettext } from "../i18n";
 import { getPageProps } from "../utils";
 import { CheckboxInput, TextAreaInput, TextInput } from "./utils";
 
@@ -19,8 +20,10 @@ function AmountPledgedField({ tier, ...props }: AmountPledgedFieldProps) {
   return (
     <div className="form-group">
       <label className="col-sm-offset-4 col-sm-5" htmlFor="amount_pledged">
-        If you would like to support us with more than ${tier.price}, please
-        enter the actual amount here:
+        {gettext(
+          "If you would like to support us with more than $%(price)s, please enter the actual amount here:",
+          { price: tier.price }
+        )}
       </label>
       <div className="col-sm-offset-4 col-sm-5">
         <input
@@ -66,12 +69,13 @@ function SignupCommercial({
   return (
     <>
       <h1 className="page-title">
-        Sign up <small>Commercial</small>
+        {gettext("Sign up")} <small>{gettext("Commercial")}</small>
       </h1>
       <p>
-        <strong>Note:</strong> Signing up for any tier other than the{" "}
-        <i>Stealth startup</i> tier will publicly list your company on this web
-        site. However, we will not publish any of your private details.
+        <strong>{gettext("Note:")}</strong>{" "}
+        {gettext(
+          "Signing up for any tier other than the Stealth startup tier will publicly list your company on this web site. However, we will not publish any of your private details."
+        )}
       </p>
 
       <Formik
@@ -98,41 +102,52 @@ function SignupCommercial({
         initialTouched={initial_errors}
         validationSchema={Yup.object({
           org_name: Yup.string().required(
-            "You need to specify the name of your organization."
+            gettext("You need to specify the name of your organization.")
           ),
           org_desc: Yup.string().required(
-            "You need to provide description of your organization."
+            gettext("You need to provide description of your organization.")
           ),
           website_url: Yup.string().required(
-            "You need to specify website of the organization."
+            gettext("You need to specify website of the organization.")
           ),
           logo_url: Yup.string(),
           api_url: Yup.string(),
-          address_street: Yup.string().required("You need to specify street."),
-          address_city: Yup.string().required("You need to specify city."),
+          address_street: Yup.string().required(
+            gettext("You need to specify street.")
+          ),
+          address_city: Yup.string().required(
+            gettext("You need to specify city.")
+          ),
           address_state: Yup.string().required(
-            "You need to specify state/province."
+            gettext("You need to specify state/province.")
           ),
           address_postcode: Yup.string().required(
-            "You need to specify postcode."
+            gettext("You need to specify postcode.")
           ),
           address_country: Yup.string().required(
-            "You need to specify country."
+            gettext("You need to specify country.")
           ),
           amount_pledged: Yup.number().min(
             tier.price,
-            "Custom amount must be more than threshold amount for selected tier or equal to it!"
+            gettext(
+              "Custom amount must be more than threshold amount for selected tier or equal to it!"
+            )
           ),
           usage_desc: Yup.string()
-            .required("Please, tell us how you (will) use our data.")
-            .max(500, "Please, limit usage description to 500 characters."),
-          contact_name: Yup.string().required("Contact name is required!"),
+            .required(gettext("Please, tell us how you (will) use our data."))
+            .max(
+              500,
+              gettext("Please, limit usage description to 500 characters.")
+            ),
+          contact_name: Yup.string().required(
+            gettext("Contact name is required!")
+          ),
           contact_email: Yup.string()
             .email()
-            .required("Email address is required!"),
+            .required(gettext("Email address is required!")),
           agreement: Yup.boolean()
-            .required("You need to accept the agreement!")
-            .oneOf([true], "You need to accept the agreement!"),
+            .required(gettext("You need to accept the agreement!"))
+            .oneOf([true], gettext("You need to accept the agreement!")),
           recaptcha: Yup.string().required(),
         })}
         onSubmit={() => {}}
@@ -155,24 +170,26 @@ function SignupCommercial({
 
             <div className="form-group">
               <div className="col-sm-4 control-label">
-                <strong>Account type</strong>
+                <strong>{gettext("Account type")}</strong>
               </div>
               <div className="col-sm-5" style={{ paddingTop: "7px" }}>
-                Commercial
+                {gettext("Commercial")}
               </div>
               <div className="col-sm-4 control-label">
-                <strong>Selected tier</strong>
+                <strong>{gettext("Selected tier")}</strong>
               </div>
               <div className="col-sm-5" style={{ paddingTop: "7px" }}>
                 <b>{tier.name}</b>
-                <em className="text-muted">${tier.price}/month and up</em>
+                <em className="text-muted">
+                  {gettext("$%(price)s/month and up", { price: tier.price })}
+                </em>
               </div>
               <div
                 className="col-sm-6 col-sm-offset-4"
                 style={{ paddingTop: "7px" }}
               >
                 <a href="/supporters/account-type">
-                  Change account type or tier
+                  {gettext("Change account type or tier")}
                 </a>
               </div>
             </div>
@@ -183,7 +200,7 @@ function SignupCommercial({
               type="text"
               id="org_name"
               name="org_name"
-              label="Organization name"
+              label={gettext("Organization name")}
               required
             >
               <div
@@ -191,17 +208,18 @@ function SignupCommercial({
                 style={{ paddingTop: "7px" }}
               >
                 <em className="text-muted">
-                  If you don&apos;t have an organization name, you probably want
-                  to sign up as a{" "}
+                  {gettext(
+                    "If you don't have an organization name, you probably want to sign up as a"
+                  )}{" "}
                   <a href="/signup/noncommercial">non-commercial / personal</a>{" "}
-                  user.
+                  {gettext("user.")}
                 </em>
               </div>
             </TextInput>
 
             <div className="form-group">
               <div className="col-sm-4 control-label">
-                <strong>MusicBrainz Account</strong>
+                <strong>{gettext("MusicBrainz Account")}</strong>
               </div>
               <div className="col-sm-5" style={{ paddingTop: "7px" }}>
                 {mb_username}
@@ -211,7 +229,7 @@ function SignupCommercial({
             <TextAreaInput
               id="org_desc"
               name="org_desc"
-              label="Organization description"
+              label={gettext("Organization description")}
               required
             >
               <div
@@ -219,16 +237,17 @@ function SignupCommercial({
                 style={{ paddingTop: "7px" }}
               >
                 <em className="text-muted">
-                  Please tell us a little about your company and whether you
-                  plan to use our{" "}
+                  {gettext(
+                    "Please tell us a little about your company and whether you plan to use our"
+                  )}{" "}
                   <a href="https://musicbrainz.org/doc/Development/XML_Web_Service/Version_2">
                     API
                   </a>
-                  or to{" "}
+                  {gettext("or to")}{" "}
                   <a href="https://musicbrainz.org/doc/MusicBrainz_Server/Setup">
                     host your own copy
                   </a>{" "}
-                  of the data.
+                  {gettext("of the data.")}
                 </em>
               </div>
             </TextAreaInput>
@@ -237,7 +256,7 @@ function SignupCommercial({
               type="text"
               id="website_url"
               name="website_url"
-              label="Website URL"
+              label={gettext("Website URL")}
               required
             />
 
@@ -245,28 +264,35 @@ function SignupCommercial({
               type="text"
               id="logo_url"
               name="logo_url"
-              label="Logo URL"
-              placeholder="(preferably in SVG format)"
+              label={gettext("Logo URL")}
+              placeholder={gettext("(preferably in SVG format)")}
             >
               <div
                 className="col-sm-offset-4 col-sm-5"
                 style={{ paddingTop: "7px" }}
               >
                 <em className="text-muted">
-                  Image should be about 250 pixels wide on a white or
-                  transparent background. We will host it on our site.
+                  {gettext(
+                    "Image should be about 250 pixels wide on a white or transparent background. We will host it on our site."
+                  )}
                 </em>
               </div>
             </TextInput>
 
-            <TextInput type="text" id="api_url" name="api_url" label="API URL">
+            <TextInput
+              type="text"
+              id="api_url"
+              name="api_url"
+              label={gettext("API URL")}
+            >
               <div
                 className="col-sm-offset-4 col-sm-5"
                 style={{ paddingTop: "7px" }}
               >
                 <em className="text-muted">
-                  URL to where developers can use your APIs using MusicBrainz
-                  IDs, if available..
+                  {gettext(
+                    "URL to where developers can use your APIs using MusicBrainz IDs, if available."
+                  )}
                 </em>
               </div>
             </TextInput>
@@ -274,10 +300,12 @@ function SignupCommercial({
             <TextAreaInput
               id="usage_desc"
               name="usage_desc"
-              label="Can you please tell us more about the project in which you'd like to use our data? Do you plan to self host the data or use our APIs?"
+              label={gettext(
+                "Can you please tell us more about the project in which you'd like to use our data? Do you plan to self host the data or use our APIs?"
+              )}
               maxLength={150}
               required
-              placeholder="(max 150 characters)"
+              placeholder={gettext("(max 150 characters)")}
             />
             <br />
 
@@ -291,7 +319,7 @@ function SignupCommercial({
 
             <div className="form-group">
               <div className="col-sm-offset-4 col-sm-5">
-                <strong>Billing address</strong>
+                <strong>{gettext("Billing address")}</strong>
               </div>
             </div>
 
@@ -299,7 +327,7 @@ function SignupCommercial({
               type="text"
               id="address_street"
               name="address_street"
-              label="Street"
+              label={gettext("Street")}
               required
             />
 
@@ -307,7 +335,7 @@ function SignupCommercial({
               type="text"
               id="address_city"
               name="address_city"
-              label="City"
+              label={gettext("City")}
               required
             />
 
@@ -315,7 +343,7 @@ function SignupCommercial({
               type="text"
               id="address_state"
               name="address_state"
-              label="State / Province"
+              label={gettext("State / Province")}
               required
             />
 
@@ -323,7 +351,7 @@ function SignupCommercial({
               type="text"
               id="address_postcode"
               name="address_postcode"
-              label="Postcode"
+              label={gettext("Postcode")}
               required
             />
 
@@ -331,7 +359,7 @@ function SignupCommercial({
               type="text"
               id="address_country"
               name="address_country"
-              label="Country"
+              label={gettext("Country")}
               required
             />
             <br />
@@ -340,7 +368,7 @@ function SignupCommercial({
               type="text"
               id="contact_name"
               name="contact_name"
-              label="Contact Name"
+              label={gettext("Contact Name")}
               required
             />
 
@@ -348,7 +376,7 @@ function SignupCommercial({
               type="email"
               id="contact_email"
               name="contact_email"
-              label="Contact Email"
+              label={gettext("Contact Email")}
               required
             />
             <br />
@@ -362,28 +390,31 @@ function SignupCommercial({
               required
             >
               <p>
-                I agree to support the MetaBrainz Foundation when my
-                organization is able to do so.
+                {gettext(
+                  "I agree to support the MetaBrainz Foundation when my organization is able to do so."
+                )}
               </p>
               <p>
-                I also agree that if I generate a Live Data Feed access token,
-                that I treat my access token as a secret and will not share this
-                token publicly or commit it to a source code repository.
+                {gettext(
+                  "I also agree that if I generate a Live Data Feed access token, that I treat my access token as a secret and will not share this token publicly or commit it to a source code repository."
+                )}
               </p>
             </CheckboxInput>
 
             <div className="col-sm-offset-4 col-sm-8 small">
               <em>
-                The following information will be shown publicly: organization
-                name, logo, website and API URLs, data usage description.
+                {gettext(
+                  "The following information will be shown publicly: organization name, logo, website and API URLs, data usage description."
+                )}
                 <br />
               </em>
             </div>
 
             <div className="col-sm-offset-4 col-sm-8 small">
               <em>
-                We&apos;ll send you more details about payment process once your
-                application is approved.
+                {gettext(
+                  "We'll send you more details about payment process once your application is approved."
+                )}
                 <br />
                 <br />
               </em>
@@ -401,7 +432,7 @@ function SignupCommercial({
             <div className="form-group">
               <div className="col-sm-offset-4 col-sm-8">
                 <button type="submit" className="btn btn-primary">
-                  Sign up
+                  {gettext("Sign up")}
                 </button>
               </div>
             </div>

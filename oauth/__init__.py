@@ -33,9 +33,15 @@ def create_app(debug=None, config_path=None):
     if is_dev_environment:
         app.before_request(lambda: static_manager.read_manifest())
 
+    from metabrainz.i18n import get_locale_context, handle_locale_change
+    from metabrainz.utils import get_global_props
+    # OAuth has its own Flask app, but it should honor the same language cookie
+    # and provide the same translation payload to React pages.
+    app.before_request(handle_locale_change)
+    app.context_processor(get_locale_context)
     app.context_processor(lambda: dict(
         get_static_path=static_manager.get_static_path,
-        global_props=json.dumps({"url_prefix": app.config["OAUTH2_BLUEPRINT_PREFIX"]}),
+        global_props=get_global_props({"url_prefix": app.config["OAUTH2_BLUEPRINT_PREFIX"]}),
     ))
 
     print("Starting metabrainz service with %s environment." % deploy_env)

@@ -90,6 +90,12 @@ def create_app(debug=None, config_path=None):
         global_props=get_global_props()
     ))
 
+    from metabrainz.i18n import get_locale_context, handle_locale_change
+    # Handle ?set_language=xx before normal view logic, then expose the active
+    # locale and language list to all templates.
+    app.before_request(handle_locale_change)
+    app.context_processor(get_locale_context)
+
     # Database
     from metabrainz import db
     db.init_db_engine(app.config["SQLALCHEMY_DATABASE_URI"])
