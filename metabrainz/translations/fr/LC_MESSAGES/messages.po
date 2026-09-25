@@ -10,30 +10,29 @@ msgstr ""
 "POT-Creation-Date: 2025-09-17 13:59+0000\n"
 "PO-Revision-Date: 2026-09-14 07:08+0000\n"
 "Last-Translator: Weblate Admin <weblate@example.com>\n"
-"Language-Team: English <http://127.0.0.1:49571/projects/metabrainz/issue-"
-"19132/en/>\n"
+"Language-Team: French <http://127.0.0.1:49571/projects/metabrainz/issue-"
+"19132/fr/>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
-"Language: en\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 2026.10.dev0\n"
 
 #: metabrainz/payments/views.py:159
+#, fuzzy
 msgid ""
 "Thank you for making a donation to the MetaBrainz Foundation. Your "
 "support is greatly appreciated! It may take some time before your "
 "donation appears in the list due to processing delays."
-msgstr ""
-"Thank you for making a donation to the MetaBrainz Foundation. Your support "
-"is greatly appreciated! [Issue 19132 UI test]"
+msgstr "thdgaseewgegesge.grwrrg.rfgergre."
 
 #: metabrainz/payments/views.py:166
 msgid ""
 "Thank you for making a payment to the MetaBrainz Foundation. Your support"
 " is greatly appreciated!"
-msgstr ""
+msgstr "cool things.gggg!"
 
 #: metabrainz/payments/views.py:177
 msgid ""
